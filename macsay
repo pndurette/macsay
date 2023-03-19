@@ -1,0 +1,75 @@
+#!/usr/bin/env python
+
+"""Let Mac say it!
+
+Like cowsay but it's the original Macintosh
+"information" dialog icon instead of a cow.
+"""
+
+import argparse
+import sys
+import textwrap
+
+__author__ = "Pierre Nicolas Durette"
+__license__ = "MIT"
+__version__ = "0.1.0"
+
+MAX_WIDE = 22
+MAX_LINES = 5
+
+# Parse input as either the whole argument (if tty) or stdin
+parser = argparse.ArgumentParser(description=f"macsay v{__version__}: Let Mac say it!")
+parser.add_argument(
+    "text",
+    metavar="text",
+    type=str,
+    nargs=(argparse.REMAINDER if sys.stdin.isatty() else "?"),
+    default=(None if sys.stdin.isatty() else sys.stdin),
+    help="Text to say. Can also be stdin.",
+)
+
+args = parser.parse_args()
+if sys.stdin.isatty():
+    input = " ".join(args.text)
+else:
+    input = sys.stdin.read()
+
+# Wrap to MAX_WIDE characters, stop to (or pad until) MAX_LINES lines
+lines = textwrap.wrap(text=input, width=MAX_WIDE, max_lines=MAX_LINES)
+lines += [""] * (MAX_LINES - len(lines))
+
+info = f"""
+▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊            ▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊
+▊▊      ▊▊        ▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊                    ▊▊▊▊▊▊▊▊▊▊▊▊
+▊▊      ▊▊        ▊▊▊▊▊▊▊▊▊▊▊▊▊                        ▊▊▊▊▊▊▊▊▊▊
+▊▊      ▊▊        ▊▊▊▊▊▊▊▊▊▊▊                            ▊▊▊▊▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊▊▊                                ▊▊▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊▊▊                                ▊▊▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊                                    ▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊      {lines[0]:<{MAX_WIDE}}        ▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊                                    ▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊      {lines[1]:<{MAX_WIDE}}        ▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊                                    ▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊      {lines[2]:<{MAX_WIDE}}        ▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊                                    ▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊      {lines[3]:<{MAX_WIDE}}        ▊▊▊▊
+▊▊                ▊▊▊▊▊▊▊                                    ▊▊▊▊
+▊▊        ▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊      {lines[4]:<{MAX_WIDE}}        ▊▊▊▊
+▊▊            ▊▊▊▊▊▊▊▊▊▊▊                                    ▊▊▊▊
+▊▊            ▊▊▊▊▊▊▊▊▊▊▊                                  ▊▊▊▊▊▊
+▊▊            ▊▊▊▊▊▊▊▊▊▊▊                                  ▊▊▊▊▊▊
+▊▊            ▊▊▊▊▊▊▊▊▊▊▊                                ▊▊▊▊▊▊▊▊
+▊▊            ▊▊▊▊▊▊▊▊▊                                ▊▊▊▊▊▊▊▊▊▊
+▊▊      ▊▊▊▊▊▊▊▊▊▊▊                                ▊▊▊▊▊▊▊▊▊▊▊▊▊▊
+▊▊            ▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊
+▊▊            ▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊
+▊▊            ▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊
+▊▊            ▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊
+▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊
+"""
+print(info)

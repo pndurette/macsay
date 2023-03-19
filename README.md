@@ -50,4 +50,4 @@ Like [`cowsay`](https://en.wikipedia.org/wiki/Cowsay) but it's the original Maci
 
 ## Licence
 
-[The MIT License (MIT)](https://github.com/pndurette/gh-actions-auto-docs/blob/main/LICENSE) Copyright © 2023 Pierre Nicolas Durette
+[The MIT License (MIT)](LICENSE) Copyright © 2023 Pierre Nicolas Durette

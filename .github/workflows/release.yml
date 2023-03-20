@@ -33,7 +33,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
         uses: svenstaro/upload-release-action@v2
         with:
-          tag: ${{ steps.release-please.outputs.tag_name }}
+          tag: ${{ steps.release.outputs.tag_name }}
           file: macsay
 
 # References:

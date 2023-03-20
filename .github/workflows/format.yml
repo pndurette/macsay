@@ -1,0 +1,32 @@
+name: Format Code
+
+on:
+  pull_request
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+    - name: Install format tools
+      run: |
+        pip install --upgrade pip
+        pip install black
+        pip install isort
+    - name: Format code
+      run: |
+        black .
+        isort .
+    - name: Push formatted code
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Format code

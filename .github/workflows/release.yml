@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Release Please
+        uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          # Keep track of version in version.txt
+          release-type: simple
+          # Updates version in-place
+          # using x-release-please-version
+          extra-files: |
+            macsay
+      
+      # Only do the rest (package build/push) if a release was created
+      - name: Checkout
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/checkout@v3
+      - name: Upload 'macsay' as Asset
+        if: ${{ steps.release.outputs.release_created }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          tag: ${{ steps.release-please.outputs.tag_name }}
+          file: macsay
+
+# References:
+# * Release Please:
+#   https://github.com/googleapis/release-please
+# * Release Please (GitHub Action)
+#   https://github.com/google-github-actions/release-please-action
+# * Conventional Commits:
+#   https://www.conventionalcommits.org/

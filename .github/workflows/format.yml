@@ -24,8 +24,8 @@ jobs:
         pip install isort
     - name: Format code
       run: |
-        black .
-        isort .
+        black macsay
+        isort macsay
     - name: Push formatted code
       uses: stefanzweifel/git-auto-commit-action@v4
       with:

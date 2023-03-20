@@ -1,14 +1,19 @@
 # `macsay`
 
-Let the Mac say it!
+> Let the Mac say it!
 
 Like [`cowsay`](https://en.wikipedia.org/wiki/Cowsay) but it's the original Macintosh "information" dialog icon instead of a cow.
 
 ## Usage
 
+Requires Python 3.6+.
+
 ```bash
-./macsay --help
+positional arguments:
+  text        Text to say. Can also be stdin.
 ```
+
+### Example
 
 ```
 ./macsay The people who are crazy enough to think they can change the world, are the ones who do.
